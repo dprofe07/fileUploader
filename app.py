@@ -1,11 +1,15 @@
 import os
+import sys
 
 from flask import Flask, render_template, redirect, flash, request
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = "daghfdgmkfhjdfgsnasfasfa"
-app.upload_folder = './uploaded/'
+if len(sys.argv) < 2 or sys.argv[1] == '':
+    app.upload_folder = './uploaded/'
+else:
+    app.upload_folder = sys.argv[1]
 
 
 @app.route('/')
