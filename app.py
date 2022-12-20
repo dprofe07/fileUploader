@@ -9,10 +9,8 @@ is_server = os.path.exists('/SERVER/is_server')
 app = Flask(__name__)
 app.secret_key = "daghfdgmkfhjdfgsnasfasfa"
 
-if len(sys.argv) >= 2 and sys.argv[1] != '':
-    app.upload_folder = sys.argv[1]
-elif is_server:
-    app.upload_folder = '/SERVER/share'
+if is_server:
+    app.upload_folder = '/SERVER/share/'
 else:
     app.upload_folder = './uploaded/'
 
@@ -35,6 +33,7 @@ def page_loaded():
         flash('Error. Try again', 'color: red;')
     else:
         filename = secure_filename(file.filename)
+        print(os.path.join(app.upload_folder, filename))
         file.save(os.path.join(app.upload_folder, filename))
         flash('Success', 'color: green;')
     return redirect(url_for('page_index'))
